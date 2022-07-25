@@ -162,13 +162,19 @@ def add_callback():
             with dpg.table_cell():
                 dpg.add_input_text()
 
+def del_callback():
+    v = dpg.get_item_configuration('MTable')
+    t = dpg.get_table_selections('MTable')
+    print(t)
+    # with dpg.table_row(parent='MTable'):
+    #     print('del')
 
 def main():
     dpg.create_context()
     dpg.set_global_font_scale(1.2)
 
     with dpg.font_registry():
-        with dpg.font(r"C:\Windows\Fonts\arial.ttf", 14) as font1:
+        with dpg.font(r"C:\Windows\Fonts\arial.ttf", 14, default_font=True, id="DefaultFont") as font1:
             # add the default font range
             dpg.add_font_range_hint(dpg.mvFontRangeHint_Default)
 
@@ -190,10 +196,11 @@ def main():
         dpg.add_text("Генератор каталогов запуска Галактика ERP 9.1")
         # Buttons
         with dpg.group(horizontal=True):
-            dpg.add_button(tag='bt1', label="Reload", callback=reload_callback)
-            dpg.add_button(tag='bt2', label="Save", callback=save_callback)
+            dpg.add_button(tag='bt1', label="Перезагрузить", callback=reload_callback)
+            dpg.add_button(tag='bt2', label="Сохранить", callback=save_callback)
             dpg.add_button(tag='bt3', label="Generate", callback=generate_callback)
-            dpg.add_button(tag='bt4', label="Add", callback=add_callback)
+            dpg.add_button(tag='bt4', label="Добавить строку", callback=add_callback)
+            dpg.add_button(tag='bt5', label="Удалить строку", callback=del_callback)
 
         with dpg.group(horizontal=True):
             dpg.add_text("Каталог назначения: ")
@@ -205,9 +212,11 @@ def main():
                              borders_outerH=True, borders_innerH=True,
                              borders_innerV=True,
                              borders_outerV=True, policy=dpg.mvTable_SizingStretchProp)
+
         with curtable:
             for key, value in arrayColName.items():
                 dpg.add_table_column(tag=f'MColumn{key}', parent='MTable', label=value)
+
 
         loadJSON()
 
