@@ -4,5 +4,6 @@ Lib/
 venv/
 Scripts/
 __pycache__/
+Generate/
 *.json
 *.xml
